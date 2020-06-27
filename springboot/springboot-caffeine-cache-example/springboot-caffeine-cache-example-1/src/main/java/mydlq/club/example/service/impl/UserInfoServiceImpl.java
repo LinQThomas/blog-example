@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -27,6 +28,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfoMap.put(userInfo.getId(), userInfo);
         // 加入缓存
         caffeineCache.put(String.valueOf(userInfo.getId()),userInfo);
+        String keys = caffeineCache.asMap().keySet().stream().collect(Collectors.joining(","));
+        log.info("caffeineCache has:" + keys);
     }
 
     @Override
